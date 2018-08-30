@@ -16,6 +16,7 @@ class App extends React.Component {
       r:Math.floor(Math.random()*256),
       color: "red"
     }]}
+    this.handleTimer()
 
     // this.handleClick = this.handleClick.bind(this, props.circle)
     this.handleTimer = this.handleTimer.bind(this)
@@ -26,7 +27,7 @@ class App extends React.Component {
     console.log("Hnadling timer!")
     setInterval(() => {
       timer();
-      // {this.createCells()}
+      {this.createCells()}
      console.log(time)
 
       
@@ -38,7 +39,7 @@ class App extends React.Component {
     console.log("create cell!!")
     let endIndex = this.state.circles.length -1
     let endId = this.state.circles[endIndex].id +1
-    let arr = this.state.circles 
+    // let arr = this.state.circles 
     let newCircle = {
       id: endId,
       cx:Math.floor(Math.random()*window.innerWidth ),
@@ -48,9 +49,12 @@ class App extends React.Component {
       color: "blue"
 
     }
-
-    console.log("test: ", this.state.circles.push({newCircle}))
+    // let test= arr.push({newCircle})
+  console.log("State: ",this.state)
+    let otherArr = [...this.state.circles, newCircle]
+    console.log("test: " + otherArr.length)
     // this.setState(this.state.circles.push(newCircle))
+    this.setState({circles: otherArr})
   }
 
   render(){
@@ -64,7 +68,7 @@ class App extends React.Component {
     
 
     <svg width={width} height={height}>
-    {this.handleTimer()}
+
     <g>
     <circle cx={this.state.circles[0].cx} cy={this.state.circles[0].cy} r={this.state.circles[0].r} fill={this.state.circles[0].color}/>
       </g>
