@@ -7,10 +7,10 @@ const App = () => {
   const height = window.innerHeight
 
   const circle = {
-    cx: width / 2,
-    cy: height / 2,
+    cx: Math.floor(Math.random()*width),
+    cy: Math.floor(Math.random()*height),
     level: 0,
-    r: 256
+    r: Math.floor(Math.random()*256)
   }
 
   return (
