@@ -1,5 +1,4 @@
 import React from 'react'
-
 import Circle from './Circle'
 
 class App extends React.Component {
