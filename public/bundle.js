@@ -955,7 +955,7 @@ var _App2 = _interopRequireDefault(_App);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 document.addEventListener('DOMContentLoaded', function () {
-  _reactDom2.default.render(_react2.default.createElement(_App2.default, { width: window.innerWidth, height: window.innerHeight }), document.getElementById('app'));
+  _reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('app'));
 });
 
 /***/ }),
@@ -18281,29 +18281,136 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Circle = __webpack_require__(28);
+
+var _Circle2 = _interopRequireDefault(_Circle);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var App = function App(props) {
-  var circle = {
+var App = function App() {
+  var width = window.innerWidth;
+  var height = window.innerHeight;
 
-    cx: props.width / 2,
-    cy: props.height / 2,
+  var circle = {
+    cx: width / 2,
+    cy: height / 2,
     level: 0,
     r: 256
   };
 
   return _react2.default.createElement(
     'svg',
-    { width: props.width, height: props.height },
-    _react2.default.createElement('circle', { cx: circle.cx, cy: circle.cy, r: circle.r }),
-    _react2.default.createElement('circle', { cx: circle.cy, cy: circle.cy, r: circle.r })
+    { width: width, height: height },
+    _react2.default.createElement(_Circle2.default, { circle: circle })
   );
 };
 
 exports.default = App;
 
-// 'this'
-//https://medium.com/byte-sized-react/what-is-this-in-react-25c62c31480
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _color = __webpack_require__(29);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Circle = function (_React$Component) {
+  _inherits(Circle, _React$Component);
+
+  function Circle(props) {
+    _classCallCheck(this, Circle);
+
+    var _this = _possibleConstructorReturn(this, (Circle.__proto__ || Object.getPrototypeOf(Circle)).call(this, props));
+
+    _this.state = {
+      children: []
+    };
+
+    _this.handleClick = _this.handleClick.bind(_this, props.circle);
+    return _this;
+  }
+
+  _createClass(Circle, [{
+    key: 'handleClick',
+    value: function handleClick(eventedCircle) {
+      var children = [];
+      var cx = eventedCircle.cx,
+          cy = eventedCircle.cy,
+          r = eventedCircle.r;
+
+      var level = eventedCircle.level + 1;
+
+      children.push({ cx: cx, cy: cy - r, r: r / 2, level: level }, // north
+      { cx: cx, cy: cy + r, r: r / 2, level: level }, // south
+      { cx: cx + r, cy: cy, r: r / 2, level: level }, // east
+      { cx: cx - r, cy: cy, r: r / 2, level: level // west
+      });
+
+      this.setState({ children: children });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props$circle = this.props.circle,
+          cx = _props$circle.cx,
+          cy = _props$circle.cy,
+          r = _props$circle.r,
+          level = _props$circle.level;
+
+      var color = (0, _color.getColor)(level);
+
+      return _react2.default.createElement(
+        'g',
+        null,
+        _react2.default.createElement('circle', { cx: cx, cy: cy, r: r, fill: color, onMouseOver: this.handleClick }),
+        this.state.children.map(function (circle, i) {
+          return _react2.default.createElement(Circle, { key: i, circle: circle });
+        })
+      );
+    }
+  }]);
+
+  return Circle;
+}(_react2.default.Component);
+
+exports.default = Circle;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getColor = getColor;
+var colors = ['red', 'blue', 'orange', 'green', 'silver', 'yellow', 'white', 'lightblue', 'pink', 'lavender', 'taupe'];
+
+function getColor(level) {
+  return colors[level];
+}
 
 /***/ })
 /******/ ]);
