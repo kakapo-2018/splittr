@@ -4,7 +4,8 @@
   "description": "Circles on circles on circles, the React way.",
   "main": "server",
   "scripts": {
-    "start": "node server & webpack --watch",
+    "start": "node server",
+    "postinstall": "webpack",
     "test": "jest --watch --noStackTrace"
   },
   "repository": {
@@ -40,6 +41,5 @@
     "webpack": "^3.10.0"
   },
   "devDependencies": {
-   
   }
 }
