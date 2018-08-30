@@ -18304,13 +18304,8 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      circle: [{
-        cx: Math.floor(Math.random() * window.innerWidth),
-        cy: Math.floor(Math.random() * window.innerHeight),
-        level: 0,
-        r: Math.floor(Math.random() * 256),
-        color: "red"
-      }, {
+      circles: [{
+        id: 0,
         cx: Math.floor(Math.random() * window.innerWidth),
         cy: Math.floor(Math.random() * window.innerHeight),
         level: 0,
@@ -18319,25 +18314,61 @@ var App = function (_React$Component) {
       }]
 
       // this.handleClick = this.handleClick.bind(this, props.circle)
-    };return _this;
+    };_this.handleTimer = _this.handleTimer.bind(_this);
+    // this.createCells = this.createCells.bind(this)
+    return _this;
   }
 
   _createClass(App, [{
+    key: 'handleTimer',
+    value: function handleTimer() {
+      var _this2 = this;
+
+      console.log("Hnadling timer!");
+      setInterval(function () {
+        timer();
+        {
+          _this2.createCells();
+        }
+        console.log(time);
+      }, 1000);
+    }
+  }, {
+    key: 'createCells',
+    value: function createCells() {
+      console.log("create cell!!");
+      var endIndex = this.state.circles.length - 1;
+      var endId = this.state.circles[endIndex].id + 1;
+      var arr = this.state.circles + newCircle;
+      var newCircle = {
+        id: endId,
+        cx: Math.floor(Math.random() * window.innerWidth),
+        cy: Math.floor(Math.random() * window.innerHeight),
+        level: endId,
+        r: Math.floor(Math.random() * 256),
+        color: "blue"
+
+      };
+
+      console.log("test: ", this.state.circles.push({ newCircle: newCircle }));
+      // this.setState(this.state.circles.push(newCircle))
+    }
+  }, {
     key: 'render',
     value: function render() {
       var width = window.innerWidth;
       var height = window.innerHeight;
 
-      console.log(this.state.circle[0].cx);
+      console.log(this.state.circles[0].cx);
 
       return _react2.default.createElement(
         'svg',
         { width: width, height: height },
+        this.handleTimer(),
         _react2.default.createElement(
           'g',
           null,
-          _react2.default.createElement('circle', { cx: this.state.circle[0].cx, cy: this.state.circle[0].cy, r: this.state.circle[0].r, fill: this.state.circle[0].color }),
-          _react2.default.createElement('circle', { cx: this.state.circle[1].cx, cy: this.state.circle[1].cy, r: this.state.circle[1].r, fill: this.state.circle[1].color })
+          _react2.default.createElement('circle', { cx: this.state.circles[0].cx, cy: this.state.circles[0].cy, r: this.state.circles[0].r, fill: this.state.circles[0].color })
         )
       );
     }
@@ -18346,6 +18377,15 @@ var App = function (_React$Component) {
   return App;
 }(_react2.default.Component);
 
+var time = 0;
+function timer() {
+  time++;
+}
+
+var circle = 0;
+function create() {
+  circle++;
+}
 exports.default = App;
 
 /***/ }),
