@@ -18277,6 +18277,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
@@ -18287,24 +18289,103 @@ var _Circle2 = _interopRequireDefault(_Circle);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var App = function App() {
-  var width = window.innerWidth;
-  var height = window.innerHeight;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  var circle = {
-    cx: width / 2,
-    cy: height / 2,
-    level: 0,
-    r: 256
-  };
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-  return _react2.default.createElement(
-    'svg',
-    { width: width, height: height },
-    _react2.default.createElement(_Circle2.default, { circle: circle })
-  );
-};
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var App = function (_React$Component) {
+  _inherits(App, _React$Component);
+
+  function App(props) {
+    _classCallCheck(this, App);
+
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+    _this.state = {
+      circles: [{
+        id: 0,
+        cx: Math.floor(Math.random() * window.innerWidth),
+        cy: Math.floor(Math.random() * window.innerHeight),
+        level: 0,
+        r: Math.floor(Math.random() * 256),
+        color: "red"
+      }]
+
+      // this.handleClick = this.handleClick.bind(this, props.circle)
+    };_this.handleTimer = _this.handleTimer.bind(_this);
+    // this.createCells = this.createCells.bind(this)
+    return _this;
+  }
+
+  _createClass(App, [{
+    key: 'handleTimer',
+    value: function handleTimer() {
+      var _this2 = this;
+
+      console.log("Hnadling timer!");
+      setInterval(function () {
+        timer();
+        {
+          _this2.createCells();
+        }
+        console.log(time);
+      }, 1000);
+    }
+  }, {
+    key: 'createCells',
+    value: function createCells() {
+      console.log("create cell!!");
+      var endIndex = this.state.circles.length - 1;
+      var endId = this.state.circles[endIndex].id + 1;
+      var arr = this.state.circles + newCircle;
+      var newCircle = {
+        id: endId,
+        cx: Math.floor(Math.random() * window.innerWidth),
+        cy: Math.floor(Math.random() * window.innerHeight),
+        level: endId,
+        r: Math.floor(Math.random() * 256),
+        color: "blue"
+
+      };
+
+      console.log("test: ", this.state.circles.push({ newCircle: newCircle }));
+      // this.setState(this.state.circles.push(newCircle))
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var width = window.innerWidth;
+      var height = window.innerHeight;
+
+      console.log(this.state.circles[0].cx);
+
+      return _react2.default.createElement(
+        'svg',
+        { width: width, height: height },
+        this.handleTimer(),
+        _react2.default.createElement(
+          'g',
+          null,
+          _react2.default.createElement('circle', { cx: this.state.circles[0].cx, cy: this.state.circles[0].cy, r: this.state.circles[0].r, fill: this.state.circles[0].color })
+        )
+      );
+    }
+  }]);
+
+  return App;
+}(_react2.default.Component);
+
+var time = 0;
+function timer() {
+  time++;
+}
+
+var circle = 0;
+function create() {
+  circle++;
+}
 exports.default = App;
 
 /***/ }),
@@ -18360,10 +18441,10 @@ var Circle = function (_React$Component) {
 
       var level = eventedCircle.level + 1;
 
-      children.push({ cx: cx, cy: cy - r, r: r / 2, level: level }, // north
-      { cx: cx, cy: cy + r, r: r / 2, level: level }, // south
-      { cx: cx + r, cy: cy, r: r / 2, level: level }, // east
-      { cx: cx - r, cy: cy, r: r / 2, level: level // west
+      children.push({ cx: Math.floor(Math.random() * cx), cy: Math.floor(Math.random() * cy), r: Math.floor(Math.random() * r), level: level }, // north
+      { cx: Math.floor(Math.random() * cx), cy: Math.floor(Math.random() * cy), r: Math.floor(Math.random() * r), level: level }, // south
+      { cx: Math.floor(Math.random() * cx), cy: Math.floor(Math.random() * cy), r: Math.floor(Math.random() * r), level: level }, // east
+      { cx: Math.floor(Math.random() * cx), cy: Math.floor(Math.random() * cy), r: Math.floor(Math.random() * r), level: level // west
       });
 
       this.setState({ children: children });
@@ -18392,6 +18473,15 @@ var Circle = function (_React$Component) {
 
   return Circle;
 }(_react2.default.Component);
+
+var time = 0;
+function timer() {
+  time++;
+}
+
+setInterval(function () {
+  timer();
+}, 1000);
 
 exports.default = Circle;
 
