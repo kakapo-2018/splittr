@@ -2,7 +2,7 @@ import React from 'react'
 
 import { getColor } from '../color'
 
-class Circle extends React.Component {
+class Cell extends React.Component {
 
   constructor (props) {
     super(props)
@@ -37,12 +37,13 @@ class Circle extends React.Component {
       <g>
         <circle cx={cx} cy={cy} r={r} fill={color} onMouseOver={this.handleClick} />
         {this.state.children.map((circle, i) => {
-          return <Circle key={i} circle={circle} />
+          return <Cell key={i} circle={circle} />
         })}
       </g>
     )
   }
 }
 
-export default Circle
+
+export default Cell
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Circle from './Circle'
+import Cell from './Cell'
 
 const App = () => {
   const width = window.innerWidth
@@ -10,12 +10,12 @@ const App = () => {
     cx: width / 2,
     cy: height / 2,
     level: 0,
-    r: 256
+    r: 50
   }
 
   return (
     <svg width={width} height={height}>
-      <Circle circle={circle} />
+      <Cell circle={circle} />
     </svg>
   )
 }

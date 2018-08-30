@@ -18281,9 +18281,9 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Circle = __webpack_require__(28);
+var _Cell = __webpack_require__(28);
 
-var _Circle2 = _interopRequireDefault(_Circle);
+var _Cell2 = _interopRequireDefault(_Cell);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18295,13 +18295,13 @@ var App = function App() {
     cx: width / 2,
     cy: height / 2,
     level: 0,
-    r: 256
+    r: 50
   };
 
   return _react2.default.createElement(
     'svg',
     { width: width, height: height },
-    _react2.default.createElement(_Circle2.default, { circle: circle })
+    _react2.default.createElement(_Cell2.default, { circle: circle })
   );
 };
 
@@ -18334,13 +18334,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Circle = function (_React$Component) {
-  _inherits(Circle, _React$Component);
+var Cell = function (_React$Component) {
+  _inherits(Cell, _React$Component);
 
-  function Circle(props) {
-    _classCallCheck(this, Circle);
+  function Cell(props) {
+    _classCallCheck(this, Cell);
 
-    var _this = _possibleConstructorReturn(this, (Circle.__proto__ || Object.getPrototypeOf(Circle)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Cell.__proto__ || Object.getPrototypeOf(Cell)).call(this, props));
 
     _this.state = {
       children: []
@@ -18350,7 +18350,7 @@ var Circle = function (_React$Component) {
     return _this;
   }
 
-  _createClass(Circle, [{
+  _createClass(Cell, [{
     key: 'handleClick',
     value: function handleClick(eventedCircle) {
       var children = [];
@@ -18384,16 +18384,16 @@ var Circle = function (_React$Component) {
         null,
         _react2.default.createElement('circle', { cx: cx, cy: cy, r: r, fill: color, onMouseOver: this.handleClick }),
         this.state.children.map(function (circle, i) {
-          return _react2.default.createElement(Circle, { key: i, circle: circle });
+          return _react2.default.createElement(Cell, { key: i, circle: circle });
         })
       );
     }
   }]);
 
-  return Circle;
+  return Cell;
 }(_react2.default.Component);
 
-exports.default = Circle;
+exports.default = Cell;
 
 /***/ }),
 /* 29 */
