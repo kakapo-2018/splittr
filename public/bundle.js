@@ -18344,15 +18344,17 @@ var Cell = function (_React$Component) {
 
     _this.state = {
       children: []
+
     };
 
-    _this.handleClick = _this.handleClick.bind(_this, props.circle);
+    _this.createCells = _this.createCells.bind(_this, props.circle);
     return _this;
   }
 
   _createClass(Cell, [{
-    key: 'handleClick',
-    value: function handleClick(eventedCircle) {
+    key: 'createCells',
+    value: function createCells(eventedCircle) {
+
       var children = [];
       var cx = eventedCircle.cx,
           cy = eventedCircle.cy,
@@ -18360,10 +18362,11 @@ var Cell = function (_React$Component) {
 
       var level = eventedCircle.level + 1;
 
-      children.push({ cx: cx, cy: cy - r, r: r / 2, level: level }, // north
-      { cx: cx, cy: cy + r, r: r / 2, level: level }, // south
-      { cx: cx + r, cy: cy, r: r / 2, level: level }, // east
-      { cx: cx - r, cy: cy, r: r / 2, level: level // west
+      children.push({
+        cx: width / 2,
+        cy: height / 2,
+        level: 0,
+        r: 50
       });
 
       this.setState({ children: children });
@@ -18382,7 +18385,7 @@ var Cell = function (_React$Component) {
       return _react2.default.createElement(
         'g',
         null,
-        _react2.default.createElement('circle', { cx: cx, cy: cy, r: r, fill: color, onMouseOver: this.handleClick }),
+        _react2.default.createElement('circle', { cx: cx, cy: cy, r: r, fill: color }),
         this.state.children.map(function (circle, i) {
           return _react2.default.createElement(Cell, { key: i, circle: circle });
         })
@@ -18395,13 +18398,17 @@ var Cell = function (_React$Component) {
 
 var time = 0;
 function timer() {
+
   time++;
-  var sw = document.getElementById('app');
-  sw.innerHTML = time;
+  //  let sw = document.getElementById('app')
+  //  sw.innerHTML = time
 }
 
 setInterval(function () {
   timer();
+  {
+    undefined.createCells();
+  }
   console.log(time);
 }, 1000);
 

@@ -9,21 +9,25 @@ class Cell extends React.Component {
 
     this.state = {
       children: []
+      
     }
 
-    this.handleClick = this.handleClick.bind(this, props.circle)
+    this.createCells = this.createCells.bind(this, props.circle)
   }
 
-  handleClick (eventedCircle) {
+  createCells (eventedCircle) {
+ 
+    
     const children = []
     const { cx, cy, r } = eventedCircle
     const level = eventedCircle.level + 1
 
-    children.push(
-      { cx: cx, cy: cy - r, r: r / 2, level }, // north
-      { cx: cx, cy: cy + r, r: r / 2, level }, // south
-      { cx: cx + r, cy: cy, r: r / 2, level }, // east
-      { cx: cx - r, cy: cy, r: r / 2, level }  // west
+    children.push({
+      cx: width / 2,
+      cy: height / 2,
+      level: 0,
+      r: 50
+    }
     )
 
     this.setState({children})
@@ -35,7 +39,7 @@ class Cell extends React.Component {
 
     return (
       <g>
-        <circle cx={cx} cy={cy} r={r} fill={color} onMouseOver={this.handleClick} />
+        <circle cx={cx} cy={cy} r={r} fill={color}/>
         {this.state.children.map((circle, i) => {
           return <Cell key={i} circle={circle} />
         })}
@@ -47,13 +51,15 @@ class Cell extends React.Component {
 
 let time = 0;
 function timer(){
-   return time++;
+
+   time++;
   //  let sw = document.getElementById('app')
   //  sw.innerHTML = time
 }
 
 setInterval(() => {
     timer();
+    {this.createCells()}
    console.log(time)
     
 }, 1000)
