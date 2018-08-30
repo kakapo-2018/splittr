@@ -1,7 +1,6 @@
 import React from 'react'
 import Sound from 'react-sound';
 
-import Circle from './Circle'
 
 class App extends React.Component {
 

@@ -3607,6 +3607,10 @@ react-dom@^16.2.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
+react-native-background-audio@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/react-native-background-audio/-/react-native-background-audio-1.1.4.tgz#310b7aa6b70979d600371aa1e60889ca366c48cf"
+
 react-reconciler@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.7.0.tgz#9614894103e5f138deeeb5eabaf3ee80eb1d026d"
