@@ -45,5 +45,19 @@ class Cell extends React.Component {
 }
 
 
+let time = 0;
+function timer(){
+   return time++;
+  //  let sw = document.getElementById('app')
+  //  sw.innerHTML = time
+}
+
+setInterval(() => {
+    timer();
+   console.log(time)
+    
+}, 1000)
+
+
 export default Cell
 

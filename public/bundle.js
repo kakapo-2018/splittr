@@ -18393,6 +18393,18 @@ var Cell = function (_React$Component) {
   return Cell;
 }(_react2.default.Component);
 
+var time = 0;
+function timer() {
+  time++;
+  var sw = document.getElementById('app');
+  sw.innerHTML = time;
+}
+
+setInterval(function () {
+  timer();
+  console.log(time);
+}, 1000);
+
 exports.default = Cell;
 
 /***/ }),
