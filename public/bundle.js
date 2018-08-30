@@ -18368,11 +18368,10 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'svg',
         { width: width, height: height },
-        _react2.default.createElement(
-          'g',
-          null,
-          _react2.default.createElement('circle', { cx: this.state.circles[0].cx, cy: this.state.circles[0].cy, r: this.state.circles[0].r, fill: this.state.circles[0].color })
-        )
+        _react2.default.createElement('circle', { cx: this.state.circles[0].cx, cy: this.state.circles[0].cy, r: this.state.circles[0].r, fill: this.state.circles[0].color }),
+        this.state.circles.map(function (circle, i) {
+          return _react2.default.createElement('circle', { key: 'circle' + i, cx: circle.cx, cy: circle.cy, r: circle.r, fill: circle.color });
+        })
       );
     }
   }]);

@@ -68,10 +68,17 @@ class App extends React.Component {
     
 
     <svg width={width} height={height}>
+    {
+      <circle cx={this.state.circles[0].cx} cy={this.state.circles[0].cy} r={this.state.circles[0].r} fill={this.state.circles[0].color}/>
+    }
 
-    <g>
-    <circle cx={this.state.circles[0].cx} cy={this.state.circles[0].cy} r={this.state.circles[0].r} fill={this.state.circles[0].color}/>
-      </g>
+    {
+      this.state.circles.map((circle, i)=>{
+        return <circle key={'circle' + i} cx={circle.cx} cy={circle.cy} r={circle.r} fill={circle.color}/>
+      })
+
+    }
+
     </svg>
   )
 }
