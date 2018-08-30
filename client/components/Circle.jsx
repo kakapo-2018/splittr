@@ -20,10 +20,10 @@ class Circle extends React.Component {
     const level = eventedCircle.level + 1
 
     children.push(
-      { cx: cx, cy: cy - r, r: r / 2, level }, // north
-      { cx: cx, cy: cy + r, r: r / 2, level }, // south
-      { cx: cx + r, cy: cy, r: r / 2, level }, // east
-      { cx: cx - r, cy: cy, r: r / 2, level }  // west
+      { cx: Math.floor(Math.random()*cx), cy:  Math.floor(Math.random()*cy), r: Math.floor(Math.random()*r), level }, // north
+      { cx: Math.floor(Math.random()*cx), cy: Math.floor(Math.random()*cy), r: Math.floor(Math.random()*r), level }, // south
+      { cx: Math.floor(Math.random()*cx), cy: Math.floor(Math.random()*cy), r: Math.floor(Math.random()*r), level }, // east
+      { cx: Math.floor(Math.random()*cx), cy: Math.floor(Math.random()*cy), r: Math.floor(Math.random()*r), level }  // west
     )
 
     this.setState({children})
@@ -43,6 +43,17 @@ class Circle extends React.Component {
     )
   }
 }
+
+
+let time = 0;
+function timer(){
+    time++;
+}
+
+setInterval(() => {
+    timer();
+        
+}, 1000)
 
 export default Circle
 
