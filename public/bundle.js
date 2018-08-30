@@ -18322,14 +18322,10 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'handleTimer',
     value: function handleTimer() {
-      var _this2 = this;
-
       console.log("Hnadling timer!");
       setInterval(function () {
         timer();
-        {
-          _this2.createCells();
-        }
+        // {this.createCells()}
         console.log(time);
       }, 1000);
     }
@@ -18339,7 +18335,7 @@ var App = function (_React$Component) {
       console.log("create cell!!");
       var endIndex = this.state.circles.length - 1;
       var endId = this.state.circles[endIndex].id + 1;
-      var arr = this.state.circles + newCircle;
+      var arr = this.state.circles;
       var newCircle = {
         id: endId,
         cx: Math.floor(Math.random() * window.innerWidth),
