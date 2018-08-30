@@ -18289,6 +18289,8 @@ var _Circle2 = _interopRequireDefault(_Circle);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -18311,10 +18313,11 @@ var App = function (_React$Component) {
         level: 0,
         r: Math.floor(Math.random() * 256),
         color: "red"
-      }]
+      }] };
+    _this.handleTimer();
 
-      // this.handleClick = this.handleClick.bind(this, props.circle)
-    };_this.handleTimer = _this.handleTimer.bind(_this);
+    // this.handleClick = this.handleClick.bind(this, props.circle)
+    _this.handleTimer = _this.handleTimer.bind(_this);
     // this.createCells = this.createCells.bind(this)
     return _this;
   }
@@ -18339,7 +18342,7 @@ var App = function (_React$Component) {
       console.log("create cell!!");
       var endIndex = this.state.circles.length - 1;
       var endId = this.state.circles[endIndex].id + 1;
-      var arr = this.state.circles + newCircle;
+      // let arr = this.state.circles 
       var newCircle = {
         id: endId,
         cx: Math.floor(Math.random() * window.innerWidth),
@@ -18347,11 +18350,12 @@ var App = function (_React$Component) {
         level: endId,
         r: Math.floor(Math.random() * 256),
         color: "blue"
-
-      };
-
-      console.log("test: ", this.state.circles.push({ newCircle: newCircle }));
+        // let test= arr.push({newCircle})
+      };console.log("State: ", this.state);
+      var otherArr = [].concat(_toConsumableArray(this.state.circles), [newCircle]);
+      console.log("test: " + otherArr.length);
       // this.setState(this.state.circles.push(newCircle))
+      this.setState({ circles: otherArr });
     }
   }, {
     key: 'render',
@@ -18364,12 +18368,10 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'svg',
         { width: width, height: height },
-        this.handleTimer(),
-        _react2.default.createElement(
-          'g',
-          null,
-          _react2.default.createElement('circle', { cx: this.state.circles[0].cx, cy: this.state.circles[0].cy, r: this.state.circles[0].r, fill: this.state.circles[0].color })
-        )
+        _react2.default.createElement('circle', { cx: this.state.circles[0].cx, cy: this.state.circles[0].cy, r: this.state.circles[0].r, fill: this.state.circles[0].color }),
+        this.state.circles.map(function (circle, i) {
+          return _react2.default.createElement('circle', { key: 'circle' + i, cx: circle.cx, cy: circle.cy, r: circle.r, fill: circle.color });
+        })
       );
     }
   }]);
