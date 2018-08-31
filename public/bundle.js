@@ -18312,7 +18312,7 @@ var App = function (_React$Component) {
         cy: Math.floor(Math.random() * window.innerHeight),
         level: 0,
         r: Math.floor(Math.random() * 256),
-        color: "red"
+        color: "blue"
       }] };
     _this.handleTimer();
 
@@ -18377,11 +18377,17 @@ var App = function (_React$Component) {
 
       var width = window.innerWidth;
       var height = window.innerHeight;
+      var timeVar = time;
 
       return _react2.default.createElement(
         'svg',
         { width: width, height: height },
         _react2.default.createElement('circle', { cx: this.state.circles[0].cx, cy: this.state.circles[0].cy, r: this.state.circles[0].r, fill: this.state.circles[0].color }),
+        _react2.default.createElement(
+          'h1',
+          null,
+          timeVar
+        ),
         this.state.circles.map(function (circle, i) {
           return _react2.default.createElement('circle', { key: 'circle' + i, id: circle.id, cx: circle.cx, cy: circle.cy, r: circle.r, fill: circle.color, onClick: _this3.deleteId.bind(_this3) });
         })
@@ -18395,6 +18401,8 @@ var App = function (_React$Component) {
 var time = 0;
 function timer() {
   time++;
+  var sw = document.getElementById('stopwatch');
+  sw.innerHTML = time;
 }
 
 var circle = 0;

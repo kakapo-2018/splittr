@@ -14,7 +14,7 @@ class App extends React.Component {
       cy: Math.floor(Math.random()*window.innerHeight),
       level: 0,
       r:Math.floor(Math.random()*256),
-      color: "red"
+      color: "blue"
     }]}
     this.handleTimer()
 
@@ -74,16 +74,19 @@ class App extends React.Component {
   render(){
   const width = window.innerWidth
   const height = window.innerHeight
-
+  let timeVar = time
     
   return (
 
     
 
     <svg width={width} height={height}>
+
     {
       <circle cx={this.state.circles[0].cx} cy={this.state.circles[0].cy} r={this.state.circles[0].r} fill={this.state.circles[0].color}/>
     }
+
+    <h1>{timeVar}</h1>
 
     {
       this.state.circles.map((circle, i)=>{
@@ -100,6 +103,8 @@ class App extends React.Component {
 let time =0;
 function timer(){
     time++;
+    let sw = document.getElementById('stopwatch')
+    sw.innerHTML = time
 }
 
 let circle =0;

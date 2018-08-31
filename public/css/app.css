@@ -1,3 +1,7 @@
+#app {
+  height: 100%;
+}
+
 body {
   background-color: white;
   color: hsla(0, 0%, 60%, 1);
@@ -9,4 +13,16 @@ body {
 
 circle {
   opacity: 0.3;
+}
+
+#stopwatch {
+  color: black;
+  text-align: center;
+  font-size:50px;
+  width: 10px;
+  margin: auto;
+  padding: 0%;
+
+  position: relative;
+  bottom: 500px;
 }
