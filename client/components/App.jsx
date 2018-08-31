@@ -1,22 +1,27 @@
 import React from 'react'
 import Sound from 'react-sound';
+import Soundz from './Soundz'
 
 import Circle from './Circle'
 
+
+
 class App extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props)
 
-    this.state = {   
-      circles:[{
-      id:0,
-      cx: Math.floor(Math.random()*window.innerWidth ),
-      cy: Math.floor(Math.random()*window.innerHeight),
-      level: 0,
-      r:Math.floor(Math.random()*256),
-      color: "blue"
-    }]}
+    this.state = {
+      circles: [{
+        id: 0,
+        cx: Math.floor(Math.random() * window.innerWidth),
+        cy: Math.floor(Math.random() * window.innerHeight),
+        level: 0,
+        r: Math.floor(Math.random() * 256),
+        color: "blue",
+        zorbaplay: true
+      }]
+    }
     this.handleTimer()
 
     // this.handleClick = this.handleClick.bind(this, props.circle)
@@ -28,36 +33,46 @@ class App extends React.Component {
   handleTimer() {
     setInterval(() => {
       timer();
-      {this.createCells()}
-     console.log(time)
+      { this.createCells() }
+      console.log(time)
 
-      
+
     }, 1000)
-  
+
   }
 
  
 
   createCells() {
-    let endIndex = this.state.circles.length -1
-    let endId = this.state.circles[endIndex].id +1
+    console.log("create cell!!")
+    let endIndex = this.state.circles.length - 1
+    let endId = this.state.circles[endIndex].id + 1
     // let arr = this.state.circles 
     let newCircle = {
       id: endId,
-      cx:Math.floor(Math.random()*window.innerWidth ),
-      cy:Math.floor(Math.random()*window.innerHeight),
+      cx: Math.floor(Math.random() * window.innerWidth),
+      cy: Math.floor(Math.random() * window.innerHeight),
       level: endId,
-      r:Math.floor(Math.random()*256), 
+      r: Math.floor(Math.random() * 256),
       color: "blue"
 
     }
     // let test= arr.push({newCircle})
-  console.log("State: ",this.state)
+    console.log("State: ", this.state)
     let otherArr = [...this.state.circles, newCircle]
     // console.log("test: " + otherArr.length)
     // this.setState(this.state.circles.push(newCircle))
-    this.setState({circles: otherArr})
+    this.setState({ circles: otherArr })
   }
+
+  startSound() {
+    this.setState({ zorbaplay: true });
+  }
+
+  stopSound() {
+    this.setState({ zorbaplay: false });
+  }
+
 
   deleteId(event) {
     let deletingId = event.target.id
@@ -79,26 +94,25 @@ class App extends React.Component {
     
   return (
 
-    
+        
+      <div>
+        <svg width={width} height={height}>
+          {
+            <circle cx={this.state.circles[0].cx} cy={this.state.circles[0].cy} r={this.state.circles[0].r} fill={this.state.circles[0].color} />
+          }
 
-    <svg width={width} height={height}>
+          {
+            this.state.circles.map((circle, i) => {
+              return <circle key={'circle' + i} cx={circle.cx} cy={circle.cy} r={circle.r} fill={circle.color} onClick={this.deleteId.bind(this)} />
+            })
 
-    {
-      <circle cx={this.state.circles[0].cx} cy={this.state.circles[0].cy} r={this.state.circles[0].r} fill={this.state.circles[0].color}/>
-    }
+          }
 
-    <h1>{timeVar}</h1>
-
-    {
-      this.state.circles.map((circle, i)=>{
-        return <circle key={'circle' + i} id={circle.id} cx={circle.cx} cy={circle.cy} r={circle.r} fill={circle.color} onClick={this.deleteId.bind(this)} />
-      })
-
-    }
-
-    </svg>
-  )
-}
+        </svg>
+        {/* <Soundz playing={true} onFinishedPlaying={this.stopSound} /> */}
+      </div>
+    )
+  }
 }
 
 let time =0;
@@ -108,8 +122,8 @@ function timer(){
     sw.innerHTML = time
 }
 
-let circle =0;
-function create(){
+let circle = 0;
+function create() {
   circle++
 }
 export default App

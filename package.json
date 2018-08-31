@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server",
     "postinstall": "webpack",
-    "test": "jest --watch --noStackTrace"
+    "test": "jest --watch --noStackTrace",
+    "dev": "node server & webpack --watch"
   },
   "repository": {
     "type": "git",

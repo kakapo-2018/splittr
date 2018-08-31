@@ -4,7 +4,7 @@ import { getColor } from '../color'
 
 class Circle extends React.Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -14,22 +14,22 @@ class Circle extends React.Component {
     this.handleClick = this.handleClick.bind(this, props.circle)
   }
 
-  handleClick (eventedCircle) {
+  handleClick(eventedCircle) {
     const children = []
     const { cx, cy, r } = eventedCircle
     const level = eventedCircle.level + 1
 
     children.push(
-      { cx: Math.floor(Math.random()*cx), cy:  Math.floor(Math.random()*cy), r: Math.floor(Math.random()*r), level }, // north
-      { cx: Math.floor(Math.random()*cx), cy: Math.floor(Math.random()*cy), r: Math.floor(Math.random()*r), level }, // south
-      { cx: Math.floor(Math.random()*cx), cy: Math.floor(Math.random()*cy), r: Math.floor(Math.random()*r), level }, // east
-      { cx: Math.floor(Math.random()*cx), cy: Math.floor(Math.random()*cy), r: Math.floor(Math.random()*r), level }  // west
+      { cx: Math.floor(Math.random() * cx), cy: Math.floor(Math.random() * cy), r: Math.floor(Math.random() * r), level }, // north
+      { cx: Math.floor(Math.random() * cx), cy: Math.floor(Math.random() * cy), r: Math.floor(Math.random() * r), level }, // south
+      { cx: Math.floor(Math.random() * cx), cy: Math.floor(Math.random() * cy), r: Math.floor(Math.random() * r), level }, // east
+      { cx: Math.floor(Math.random() * cx), cy: Math.floor(Math.random() * cy), r: Math.floor(Math.random() * r), level }  // west
     )
 
-    this.setState({children})
+    this.setState({ children })
   }
 
-  render () {
+  render() {
     const { cx, cy, r, level } = this.props.circle
     const color = getColor(level)
 
@@ -46,13 +46,13 @@ class Circle extends React.Component {
 
 
 let time = 0;
-function timer(){
-    time++;
+function timer() {
+  time++;
 }
 
 setInterval(() => {
-    timer();
-        
+  timer();
+
 }, 1000)
 
 export default Circle
