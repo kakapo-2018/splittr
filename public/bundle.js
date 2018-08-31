@@ -18361,10 +18361,14 @@ var App = function (_React$Component) {
     value: function deleteId(event) {
       var deletingId = event.target.id;
 
-      var please = this.state.circles.filter(function (circle) {
-        return circle.id != deletingId;
-      });
-      this.setState({ circles: please });
+      if (this.state.circles.length == 1) {
+        alert("You win!!");
+      } else {
+        var please = this.state.circles.filter(function (circle) {
+          return circle.id != deletingId;
+        });
+        this.setState({ circles: please });
+      }
     }
   }, {
     key: 'render',

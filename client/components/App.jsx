@@ -61,14 +61,16 @@ class App extends React.Component {
   deleteId(event) {
     let deletingId = event.target.id
 
-
+    if(this.state.circles.length == 1){
+      alert ("You win!!")
+    } else {
     let please = this.state.circles.filter(circle => {
       return circle.id != deletingId
     })
     this.setState({circles: please})
     
   }
-  
+}
   render(){
   const width = window.innerWidth
   const height = window.innerHeight
