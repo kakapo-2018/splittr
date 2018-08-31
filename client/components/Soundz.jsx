@@ -5,22 +5,22 @@ const tune = './sound/zorba.mp3'
 
 
 export default class Soundz extends React.Component {
-    constructor(props) {
-      super(props);
-    }
+  constructor(props) {
+    super(props);
+  }
 
-      render() {
-        return (
-          <div><p>hi</p>
-          <Sound
-            url="./sound/zorba.mp3"
-            playStatus={Sound.status.PLAYING}
-            playFromPosition={300 /* in milliseconds */}
-            onLoading={this.handleSongLoading}
-            onPlaying={this.handleSongPlaying}
-            onFinishedPlaying={this.handleSongFinishedPlaying}
-            />
-            </div>
-        );
-      }
-    }
+  render() {
+    return (
+      <div>
+        <p>hi</p>
+        <Sound
+          url="./sound/zorba.mp3"
+          playStatus={Sound.status.PLAYING}
+          playFromPosition={300 /* in milliseconds */}
+          onLoading={this.handleSongLoading}
+          onPlaying={this.handleSongPlaying}
+          onFinishedPlaying={this.handleSongFinishedPlaying} />
+      </div>
+    );
+  }
+}

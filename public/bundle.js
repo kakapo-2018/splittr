@@ -1285,10 +1285,20 @@ var _App = __webpack_require__(30);
 
 var _App2 = _interopRequireDefault(_App);
 
+var _Soundz = __webpack_require__(37);
+
+var _Soundz2 = _interopRequireDefault(_Soundz);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 document.addEventListener('DOMContentLoaded', function () {
-  _reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('app'));
+  _reactDom2.default.render(_react2.default.createElement(
+    _react2.default.Fragment,
+    null,
+    _react2.default.createElement(_App2.default, null),
+    ' ',
+    _react2.default.createElement(_Soundz2.default, { playing: true, onFinishedPlaying: function onFinishedPlaying() {} })
+  ), document.getElementById('app'));
 });
 
 /***/ }),
@@ -18655,7 +18665,8 @@ var App = function (_React$Component) {
         r: Math.floor(Math.random() * 256),
         color: "red",
         zorbaplay: true
-      }] };
+      }]
+    };
     _this.handleTimer();
 
     // this.handleClick = this.handleClick.bind(this, props.circle)
@@ -18727,8 +18738,7 @@ var App = function (_React$Component) {
           this.state.circles.map(function (circle, i) {
             return _react2.default.createElement('circle', { key: 'circle' + i, cx: circle.cx, cy: circle.cy, r: circle.r, fill: circle.color });
           })
-        ),
-        _react2.default.createElement(_Soundz2.default, { playing: this.state.zorbaplay, onFinishedPlaying: this.stopSound })
+        )
       );
     }
   }]);
@@ -28580,8 +28590,7 @@ var Soundz = function (_React$Component) {
           playFromPosition: 300 /* in milliseconds */,
           onLoading: this.handleSongLoading,
           onPlaying: this.handleSongPlaying,
-          onFinishedPlaying: this.handleSongFinishedPlaying
-        })
+          onFinishedPlaying: this.handleSongFinishedPlaying })
       );
     }
   }]);
