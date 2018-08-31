@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -261,9 +261,9 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(18);
-} else {
   module.exports = __webpack_require__(19);
+} else {
+  module.exports = __webpack_require__(20);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -596,7 +596,7 @@ module.exports = ReactPropTypesSecret;
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(5);
   var warning = __webpack_require__(6);
-  var ReactPropTypesSecret = __webpack_require__(20);
+  var ReactPropTypesSecret = __webpack_require__(21);
   var loggedTypeFailures = {};
 }
 
@@ -895,7 +895,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(23);
+var isTextNode = __webpack_require__(24);
 
 /*eslint-disable no-bitwise */
 
@@ -969,7 +969,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(31);
+var _propTypes = __webpack_require__(32);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -988,11 +988,11 @@ var soundManager = void 0;
 // Allow server side rendering
 if (typeof window !== 'undefined') {
   if (process.env.NODE_ENV !== 'production') {
-    var _require = __webpack_require__(35);
+    var _require = __webpack_require__(36);
 
     soundManager = _require.soundManager;
   } else {
-    var _require2 = __webpack_require__(36);
+    var _require2 = __webpack_require__(37);
 
     soundManager = _require2.soundManager;
   }
@@ -1273,19 +1273,88 @@ module.exports = function(module) {
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(21);
+var _reactSound = __webpack_require__(15);
+
+var _reactSound2 = _interopRequireDefault(_reactSound);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var tune = './sound/zorba.mp3';
+// import songs from '../../public/ambientSound'; //change to actual folder with mp3 file
+
+
+var Soundz = function (_React$Component) {
+  _inherits(Soundz, _React$Component);
+
+  function Soundz(props) {
+    _classCallCheck(this, Soundz);
+
+    return _possibleConstructorReturn(this, (Soundz.__proto__ || Object.getPrototypeOf(Soundz)).call(this, props));
+  }
+
+  _createClass(Soundz, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'p',
+          null,
+          'hi'
+        ),
+        _react2.default.createElement(_reactSound2.default, {
+          url: './sound/zorba.mp3',
+          playStatus: _reactSound2.default.status.PLAYING,
+          playFromPosition: 300 /* in milliseconds */,
+          onLoading: this.handleSongLoading,
+          onPlaying: this.handleSongPlaying,
+          onFinishedPlaying: this.handleSongFinishedPlaying })
+      );
+    }
+  }]);
+
+  return Soundz;
+}(_react2.default.Component);
+
+exports.default = Soundz;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(22);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _App = __webpack_require__(30);
+var _App = __webpack_require__(31);
 
 var _App2 = _interopRequireDefault(_App);
 
-var _Soundz = __webpack_require__(37);
+var _Soundz = __webpack_require__(17);
 
 var _Soundz2 = _interopRequireDefault(_Soundz);
 
@@ -1302,7 +1371,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1330,7 +1399,7 @@ isValidElement:K,version:"16.2.0",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_F
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2695,7 +2764,7 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2714,7 +2783,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2752,15 +2821,15 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(22);
+  module.exports = __webpack_require__(23);
 } else {
-  module.exports = __webpack_require__(25);
+  module.exports = __webpack_require__(26);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2996,7 +3065,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3011,7 +3080,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
  * @typechecks
  */
 
-var isNode = __webpack_require__(24);
+var isNode = __webpack_require__(25);
 
 /**
  * @param {*} object The object to check.
@@ -3024,7 +3093,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3052,7 +3121,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3086,8 +3155,8 @@ var containsNode = __webpack_require__(13);
 var focusNode = __webpack_require__(14);
 var emptyObject = __webpack_require__(4);
 var checkPropTypes = __webpack_require__(8);
-var hyphenateStyleName = __webpack_require__(26);
-var camelizeStyleName = __webpack_require__(28);
+var hyphenateStyleName = __webpack_require__(27);
+var camelizeStyleName = __webpack_require__(29);
 
 /**
  * WARNING: DO NOT manually require this module.
@@ -18454,7 +18523,7 @@ module.exports = reactDom;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18469,7 +18538,7 @@ module.exports = reactDom;
 
 
 
-var hyphenate = __webpack_require__(27);
+var hyphenate = __webpack_require__(28);
 
 var msPattern = /^ms-/;
 
@@ -18496,7 +18565,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18532,7 +18601,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18547,7 +18616,7 @@ module.exports = hyphenate;
 
 
 
-var camelize = __webpack_require__(29);
+var camelize = __webpack_require__(30);
 
 var msPattern = /^-ms-/;
 
@@ -18575,7 +18644,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18610,7 +18679,7 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18630,7 +18699,7 @@ var _reactSound = __webpack_require__(15);
 
 var _reactSound2 = _interopRequireDefault(_reactSound);
 
-var _Soundz = __webpack_require__(37);
+var _Soundz = __webpack_require__(17);
 
 var _Soundz2 = _interopRequireDefault(_Soundz);
 
@@ -18663,7 +18732,7 @@ var App = function (_React$Component) {
         cy: Math.floor(Math.random() * window.innerHeight),
         level: 0,
         r: Math.floor(Math.random() * 256),
-        color: "red",
+        color: "blue",
         zorbaplay: true
       }]
     };
@@ -18671,6 +18740,7 @@ var App = function (_React$Component) {
 
     // this.handleClick = this.handleClick.bind(this, props.circle)
     _this.handleTimer = _this.handleTimer.bind(_this);
+    _this.deleteId = _this.deleteId.bind(_this);
     // this.createCells = this.createCells.bind(this)
     return _this;
   }
@@ -18680,7 +18750,6 @@ var App = function (_React$Component) {
     value: function handleTimer() {
       var _this2 = this;
 
-      console.log("Hnadling timer!");
       setInterval(function () {
         timer();
         {
@@ -18706,7 +18775,7 @@ var App = function (_React$Component) {
         // let test= arr.push({newCircle})
       };console.log("State: ", this.state);
       var otherArr = [].concat(_toConsumableArray(this.state.circles), [newCircle]);
-      console.log("test: " + otherArr.length);
+      // console.log("test: " + otherArr.length)
       // this.setState(this.state.circles.push(newCircle))
       this.setState({ circles: otherArr });
     }
@@ -18721,12 +18790,27 @@ var App = function (_React$Component) {
       this.setState({ zorbaplay: false });
     }
   }, {
+    key: 'deleteId',
+    value: function deleteId(event) {
+      var deletingId = event.target.id;
+
+      if (this.state.circles.length == 1) {
+        alert("You win!!");
+      } else {
+        var please = this.state.circles.filter(function (circle) {
+          return circle.id != deletingId;
+        });
+        this.setState({ circles: please });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       var width = window.innerWidth;
       var height = window.innerHeight;
-
-      console.log(this.state.circles[0].cx);
+      var timeVar = time;
 
       return _react2.default.createElement(
         'div',
@@ -18736,7 +18820,7 @@ var App = function (_React$Component) {
           { width: width, height: height },
           _react2.default.createElement('circle', { cx: this.state.circles[0].cx, cy: this.state.circles[0].cy, r: this.state.circles[0].r, fill: this.state.circles[0].color }),
           this.state.circles.map(function (circle, i) {
-            return _react2.default.createElement('circle', { key: 'circle' + i, cx: circle.cx, cy: circle.cy, r: circle.r, fill: circle.color });
+            return _react2.default.createElement('circle', { key: 'circle' + i, cx: circle.cx, cy: circle.cy, r: circle.r, fill: circle.color, onClick: _this3.deleteId.bind(_this3) });
           })
         )
       );
@@ -18749,6 +18833,8 @@ var App = function (_React$Component) {
 var time = 0;
 function timer() {
   time++;
+  var sw = document.getElementById('stopwatch');
+  sw.innerHTML = time;
 }
 
 var circle = 0;
@@ -18758,7 +18844,7 @@ function create() {
 exports.default = App;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/**
@@ -18783,17 +18869,17 @@ if (process.env.NODE_ENV !== 'production') {
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(32)(isValidElement, throwOnDirectAccess);
+  module.exports = __webpack_require__(33)(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(34)();
+  module.exports = __webpack_require__(35)();
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18809,7 +18895,7 @@ if (process.env.NODE_ENV !== 'production') {
 var assign = __webpack_require__(3);
 
 var ReactPropTypesSecret = __webpack_require__(7);
-var checkPropTypes = __webpack_require__(33);
+var checkPropTypes = __webpack_require__(34);
 
 var printWarning = function() {};
 
@@ -19356,7 +19442,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19455,7 +19541,7 @@ module.exports = checkPropTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19521,7 +19607,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_RESULT__;/** @license
@@ -25823,7 +25909,7 @@ window.soundManager = soundManager;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)(module)))
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_RESULT__;/** @license
@@ -28530,75 +28616,6 @@ window.soundManager = soundManager;
 }(window));
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)(module)))
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactSound = __webpack_require__(15);
-
-var _reactSound2 = _interopRequireDefault(_reactSound);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var tune = './sound/zorba.mp3';
-// import songs from '../../public/ambientSound'; //change to actual folder with mp3 file
-
-
-var Soundz = function (_React$Component) {
-  _inherits(Soundz, _React$Component);
-
-  function Soundz(props) {
-    _classCallCheck(this, Soundz);
-
-    return _possibleConstructorReturn(this, (Soundz.__proto__ || Object.getPrototypeOf(Soundz)).call(this, props));
-  }
-
-  _createClass(Soundz, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'p',
-          null,
-          'hi'
-        ),
-        _react2.default.createElement(_reactSound2.default, {
-          url: './sound/zorba.mp3',
-          playStatus: _reactSound2.default.status.PLAYING,
-          playFromPosition: 300 /* in milliseconds */,
-          onLoading: this.handleSongLoading,
-          onPlaying: this.handleSongPlaying,
-          onFinishedPlaying: this.handleSongFinishedPlaying })
-      );
-    }
-  }]);
-
-  return Soundz;
-}(_react2.default.Component);
-
-exports.default = Soundz;
 
 /***/ }),
 /* 38 */

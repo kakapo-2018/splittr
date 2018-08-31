@@ -18,7 +18,7 @@ class App extends React.Component {
         cy: Math.floor(Math.random() * window.innerHeight),
         level: 0,
         r: Math.floor(Math.random() * 256),
-        color: "red",
+        color: "blue",
         zorbaplay: true
       }]
     }
@@ -26,11 +26,11 @@ class App extends React.Component {
 
     // this.handleClick = this.handleClick.bind(this, props.circle)
     this.handleTimer = this.handleTimer.bind(this)
+    this.deleteId = this.deleteId.bind(this)
     // this.createCells = this.createCells.bind(this)
   }
 
   handleTimer() {
-    console.log("Hnadling timer!")
     setInterval(() => {
       timer();
       { this.createCells() }
@@ -40,6 +40,8 @@ class App extends React.Component {
     }, 1000)
 
   }
+
+ 
 
   createCells() {
     console.log("create cell!!")
@@ -58,7 +60,7 @@ class App extends React.Component {
     // let test= arr.push({newCircle})
     console.log("State: ", this.state)
     let otherArr = [...this.state.circles, newCircle]
-    console.log("test: " + otherArr.length)
+    // console.log("test: " + otherArr.length)
     // this.setState(this.state.circles.push(newCircle))
     this.setState({ circles: otherArr })
   }
@@ -71,15 +73,28 @@ class App extends React.Component {
     this.setState({ zorbaplay: false });
   }
 
-  render() {
-    const width = window.innerWidth
-    const height = window.innerHeight
 
-    console.log(this.state.circles[0].cx)
+  deleteId(event) {
+    let deletingId = event.target.id
 
-    return (
+    if(this.state.circles.length == 1){
+      alert ("You win!!")
+    } else {
+    let please = this.state.circles.filter(circle => {
+      return circle.id != deletingId
+    })
+    this.setState({circles: please})
+    
+  }
+}
+  render(){
+  const width = window.innerWidth
+  const height = window.innerHeight
+  let timeVar = time
+    
+  return (
 
-
+        
       <div>
         <svg width={width} height={height}>
           {
@@ -88,7 +103,7 @@ class App extends React.Component {
 
           {
             this.state.circles.map((circle, i) => {
-              return <circle key={'circle' + i} cx={circle.cx} cy={circle.cy} r={circle.r} fill={circle.color} />
+              return <circle key={'circle' + i} cx={circle.cx} cy={circle.cy} r={circle.r} fill={circle.color} onClick={this.deleteId.bind(this)} />
             })
 
           }
@@ -100,9 +115,11 @@ class App extends React.Component {
   }
 }
 
-let time = 0;
-function timer() {
-  time++;
+let time =0;
+function timer(){
+    time++;
+    let sw = document.getElementById('stopwatch')
+    sw.innerHTML = time
 }
 
 let circle = 0;
