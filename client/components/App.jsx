@@ -1,22 +1,10 @@
 import React from 'react'
 import Sound from 'react-sound';
+import Soundz from './Soundz'
 
 import Circle from './Circle'
 
-class MyComponentWithSound extends React.Component {
-  render() {
-    return <Sound
-    //{...props}
-      url="../../public/sound/zorba.mp3"
-      playStatus={Sound.status.PLAYING}
-      loop={true}
-      //playFromPosition={0 /* in milliseconds */}
-      //onLoading={this.handleSongLoading}
-      //onPlaying={this.handleSongPlaying}
-      //onFinishedPlaying={this.handleSongFinishedPlaying}
-    />; 
-  }
-}
+
 
 class App extends React.Component {
 
@@ -30,7 +18,8 @@ class App extends React.Component {
       cy: Math.floor(Math.random()*window.innerHeight),
       level: 0,
       r:Math.floor(Math.random()*256),
-      color: "red"
+      color: "red",
+      zorbaplay: true
     }]}
     this.handleTimer()
 
@@ -73,6 +62,14 @@ class App extends React.Component {
     this.setState({circles: otherArr})
   }
 
+  startSound() {
+    this.setState({zorbaplay: true});
+  }
+
+  stopSound() {
+    this.setState({zorbaplay: false});
+  }
+
   render(){
   const width = window.innerWidth
   const height = window.innerHeight
@@ -82,7 +79,7 @@ class App extends React.Component {
   return (
 
     
-
+    <div>
     <svg width={width} height={height}>
     {
       <circle cx={this.state.circles[0].cx} cy={this.state.circles[0].cy} r={this.state.circles[0].r} fill={this.state.circles[0].color}/>
@@ -96,6 +93,9 @@ class App extends React.Component {
     }
 
     </svg>
+    
+    <Soundz playing={this.state.zorbaplay} onFinishedPlaying={this.stopSound}/>
+    </div>
   )
 }
 }

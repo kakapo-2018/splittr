@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -261,9 +261,9 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(17);
-} else {
   module.exports = __webpack_require__(18);
+} else {
+  module.exports = __webpack_require__(19);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
@@ -596,7 +596,7 @@ module.exports = ReactPropTypesSecret;
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(5);
   var warning = __webpack_require__(6);
-  var ReactPropTypesSecret = __webpack_require__(19);
+  var ReactPropTypesSecret = __webpack_require__(20);
   var loggedTypeFailures = {};
 }
 
@@ -895,7 +895,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(22);
+var isTextNode = __webpack_require__(23);
 
 /*eslint-disable no-bitwise */
 
@@ -954,6 +954,292 @@ module.exports = focusNode;
 
 /***/ }),
 /* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(31);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var pendingCalls = [];
+var initialized = false;
+
+var soundManager = void 0;
+// Allow server side rendering
+if (typeof window !== 'undefined') {
+  if (process.env.NODE_ENV !== 'production') {
+    var _require = __webpack_require__(35);
+
+    soundManager = _require.soundManager;
+  } else {
+    var _require2 = __webpack_require__(36);
+
+    soundManager = _require2.soundManager;
+  }
+
+  soundManager.onready(function () {
+    pendingCalls.slice().forEach(function (cb) {
+      return cb();
+    });
+  });
+}
+
+function _createSound(options, cb) {
+  if (soundManager.ok()) {
+    cb(soundManager.createSound(options));
+    return function () {};
+  } else {
+    if (!initialized) {
+      initialized = true;
+      soundManager.beginDelayedInit();
+    }
+
+    var call = function call() {
+      cb(soundManager.createSound(options));
+    };
+
+    pendingCalls.push(call);
+
+    return function () {
+      pendingCalls.splice(pendingCalls.indexOf(call), 1);
+    };
+  }
+}
+
+function noop() {}
+
+var playStatuses = {
+  PLAYING: 'PLAYING',
+  STOPPED: 'STOPPED',
+  PAUSED: 'PAUSED'
+};
+
+var Sound = function (_React$Component) {
+  _inherits(Sound, _React$Component);
+
+  function Sound() {
+    _classCallCheck(this, Sound);
+
+    return _possibleConstructorReturn(this, (Sound.__proto__ || Object.getPrototypeOf(Sound)).apply(this, arguments));
+  }
+
+  _createClass(Sound, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.createSound(function (sound) {
+        return _this2.updateSound(sound);
+      });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.removeSound();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      var _this3 = this;
+
+      if (this.props.url !== prevProps.url) {
+        this.createSound(function (sound) {
+          return _this3.updateSound(sound, prevProps);
+        });
+      } else {
+        this.updateSound(this.sound);
+      }
+    }
+  }, {
+    key: 'updateSound',
+    value: function updateSound(sound) {
+      var prevProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      if (!sound) {
+        return;
+      }
+
+      if (this.props.playStatus === playStatuses.PLAYING) {
+        if (sound.playState === 0) {
+          sound.play();
+        }
+
+        if (sound.paused) {
+          sound.resume();
+        }
+      } else if (this.props.playStatus === playStatuses.STOPPED) {
+        if (sound.playState !== 0) {
+          sound.stop();
+        }
+      } else {
+        // this.props.playStatus === playStatuses.PAUSED
+        if (!sound.paused) {
+          sound.pause();
+        }
+      }
+
+      if (this.props.playFromPosition != null) {
+        if (this.props.playFromPosition !== prevProps.playFromPosition) {
+          sound.setPosition(this.props.playFromPosition);
+        }
+      }
+
+      if (this.props.position != null) {
+        if (sound.position !== this.props.position && Math.round(sound.position) !== Math.round(this.props.position)) {
+
+          sound.setPosition(this.props.position);
+        }
+      }
+
+      if (this.props.volume !== prevProps.volume) {
+        sound.setVolume(this.props.volume);
+      }
+
+      if (this.props.playbackRate !== prevProps.playbackRate) {
+        sound.setPlaybackRate(this.props.playbackRate);
+      }
+    }
+  }, {
+    key: 'createSound',
+    value: function createSound(callback) {
+      var _this4 = this;
+
+      this.removeSound();
+
+      var instance = this;
+
+      if (!this.props.url) {
+        return;
+      }
+
+      this.stopCreatingSound = _createSound({
+        url: this.props.url,
+        autoLoad: this.props.autoLoad,
+        volume: this.props.volume,
+        position: this.props.playFromPosition || this.props.position || 0,
+        playbackRate: this.props.playbackRate,
+        whileloading: function whileloading() {
+          instance.props.onLoading(this);
+        },
+        whileplaying: function whileplaying() {
+          instance.props.onPlaying(this);
+        },
+        onerror: function onerror(errorCode, description) {
+          instance.props.onError(errorCode, description, this);
+        },
+        onload: function onload() {
+          instance.props.onLoad(this);
+        },
+        onpause: function onpause() {
+          instance.props.onPause(this);
+        },
+        onresume: function onresume() {
+          instance.props.onResume(this);
+        },
+        onstop: function onstop() {
+          instance.props.onStop(this);
+        },
+        onfinish: function onfinish() {
+          if (instance.props.loop && instance.props.playStatus === playStatuses.PLAYING) {
+            instance.sound.play();
+          } else {
+            instance.props.onFinishedPlaying();
+          }
+        },
+        onbufferchange: function onbufferchange() {
+          instance.props.onBufferChange(this.isBuffering);
+        }
+      }, function (sound) {
+        _this4.sound = sound;
+        callback(sound);
+      });
+    }
+  }, {
+    key: 'removeSound',
+    value: function removeSound() {
+      if (this.stopCreatingSound) {
+        this.stopCreatingSound();
+        delete this.stopCreatingSound;
+      }
+
+      if (this.sound) {
+        try {
+          this.sound.destruct();
+        } catch (e) {} // eslint-disable-line
+
+        delete this.sound;
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return null;
+    }
+  }]);
+
+  return Sound;
+}(_react2.default.Component);
+
+Sound.status = playStatuses;
+Sound.propTypes = {
+  url: _propTypes2.default.string.isRequired,
+  playStatus: _propTypes2.default.oneOf(Object.keys(playStatuses)).isRequired,
+  position: _propTypes2.default.number,
+  playFromPosition: _propTypes2.default.number,
+  volume: _propTypes2.default.number,
+  playbackRate: _propTypes2.default.number,
+  onError: _propTypes2.default.func,
+  onLoading: _propTypes2.default.func,
+  onLoad: _propTypes2.default.func,
+  onPlaying: _propTypes2.default.func,
+  onPause: _propTypes2.default.func,
+  onResume: _propTypes2.default.func,
+  onStop: _propTypes2.default.func,
+  onFinishedPlaying: _propTypes2.default.func,
+  onBufferChange: _propTypes2.default.func,
+  autoLoad: _propTypes2.default.bool,
+  loop: _propTypes2.default.bool
+};
+Sound.defaultProps = {
+  volume: 100,
+  playbackRate: 1,
+  onError: noop,
+  onLoading: noop,
+  onPlaying: noop,
+  onLoad: noop,
+  onPause: noop,
+  onResume: noop,
+  onStop: noop,
+  onFinishedPlaying: noop,
+  onBufferChange: noop,
+  autoLoad: false,
+  loop: false
+};
+exports.default = Sound;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -981,7 +1267,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -991,11 +1277,11 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(20);
+var _reactDom = __webpack_require__(21);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _App = __webpack_require__(29);
+var _App = __webpack_require__(30);
 
 var _App2 = _interopRequireDefault(_App);
 
@@ -1006,7 +1292,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1034,7 +1320,7 @@ isValidElement:K,version:"16.2.0",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_F
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2399,7 +2685,7 @@ module.exports = react;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2418,7 +2704,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2456,15 +2742,15 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(21);
+  module.exports = __webpack_require__(22);
 } else {
-  module.exports = __webpack_require__(24);
+  module.exports = __webpack_require__(25);
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2700,7 +2986,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2715,7 +3001,7 @@ Z.injectIntoDevTools({findFiberByHostInstance:pb,bundleType:0,version:"16.2.0",r
  * @typechecks
  */
 
-var isNode = __webpack_require__(23);
+var isNode = __webpack_require__(24);
 
 /**
  * @param {*} object The object to check.
@@ -2728,7 +3014,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2756,7 +3042,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2790,8 +3076,8 @@ var containsNode = __webpack_require__(13);
 var focusNode = __webpack_require__(14);
 var emptyObject = __webpack_require__(4);
 var checkPropTypes = __webpack_require__(8);
-var hyphenateStyleName = __webpack_require__(25);
-var camelizeStyleName = __webpack_require__(27);
+var hyphenateStyleName = __webpack_require__(26);
+var camelizeStyleName = __webpack_require__(28);
 
 /**
  * WARNING: DO NOT manually require this module.
@@ -18158,7 +18444,7 @@ module.exports = reactDom;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18173,7 +18459,7 @@ module.exports = reactDom;
 
 
 
-var hyphenate = __webpack_require__(26);
+var hyphenate = __webpack_require__(27);
 
 var msPattern = /^ms-/;
 
@@ -18200,7 +18486,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18236,7 +18522,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18251,7 +18537,7 @@ module.exports = hyphenate;
 
 
 
-var camelize = __webpack_require__(28);
+var camelize = __webpack_require__(29);
 
 var msPattern = /^-ms-/;
 
@@ -18279,7 +18565,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18314,7 +18600,7 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -18330,11 +18616,15 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactSound = __webpack_require__(30);
+var _reactSound = __webpack_require__(15);
 
 var _reactSound2 = _interopRequireDefault(_reactSound);
 
-var _Circle = __webpack_require__(37);
+var _Soundz = __webpack_require__(37);
+
+var _Soundz2 = _interopRequireDefault(_Soundz);
+
+var _Circle = __webpack_require__(38);
 
 var _Circle2 = _interopRequireDefault(_Circle);
 
@@ -18363,7 +18653,8 @@ var App = function (_React$Component) {
         cy: Math.floor(Math.random() * window.innerHeight),
         level: 0,
         r: Math.floor(Math.random() * 256),
-        color: "red"
+        color: "red",
+        zorbaplay: true
       }] };
     _this.handleTimer();
 
@@ -18409,6 +18700,16 @@ var App = function (_React$Component) {
       this.setState({ circles: otherArr });
     }
   }, {
+    key: 'startSound',
+    value: function startSound() {
+      this.setState({ zorbaplay: true });
+    }
+  }, {
+    key: 'stopSound',
+    value: function stopSound() {
+      this.setState({ zorbaplay: false });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var width = window.innerWidth;
@@ -18417,12 +18718,17 @@ var App = function (_React$Component) {
       console.log(this.state.circles[0].cx);
 
       return _react2.default.createElement(
-        'svg',
-        { width: width, height: height },
-        _react2.default.createElement('circle', { cx: this.state.circles[0].cx, cy: this.state.circles[0].cy, r: this.state.circles[0].r, fill: this.state.circles[0].color }),
-        this.state.circles.map(function (circle, i) {
-          return _react2.default.createElement('circle', { key: 'circle' + i, cx: circle.cx, cy: circle.cy, r: circle.r, fill: circle.color });
-        })
+        'div',
+        null,
+        _react2.default.createElement(
+          'svg',
+          { width: width, height: height },
+          _react2.default.createElement('circle', { cx: this.state.circles[0].cx, cy: this.state.circles[0].cy, r: this.state.circles[0].r, fill: this.state.circles[0].color }),
+          this.state.circles.map(function (circle, i) {
+            return _react2.default.createElement('circle', { key: 'circle' + i, cx: circle.cx, cy: circle.cy, r: circle.r, fill: circle.color });
+          })
+        ),
+        _react2.default.createElement(_Soundz2.default, { playing: this.state.zorbaplay, onFinishedPlaying: this.stopSound })
       );
     }
   }]);
@@ -18440,292 +18746,6 @@ function create() {
   circle++;
 }
 exports.default = App;
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(31);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var pendingCalls = [];
-var initialized = false;
-
-var soundManager = void 0;
-// Allow server side rendering
-if (typeof window !== 'undefined') {
-  if (process.env.NODE_ENV !== 'production') {
-    var _require = __webpack_require__(35);
-
-    soundManager = _require.soundManager;
-  } else {
-    var _require2 = __webpack_require__(36);
-
-    soundManager = _require2.soundManager;
-  }
-
-  soundManager.onready(function () {
-    pendingCalls.slice().forEach(function (cb) {
-      return cb();
-    });
-  });
-}
-
-function _createSound(options, cb) {
-  if (soundManager.ok()) {
-    cb(soundManager.createSound(options));
-    return function () {};
-  } else {
-    if (!initialized) {
-      initialized = true;
-      soundManager.beginDelayedInit();
-    }
-
-    var call = function call() {
-      cb(soundManager.createSound(options));
-    };
-
-    pendingCalls.push(call);
-
-    return function () {
-      pendingCalls.splice(pendingCalls.indexOf(call), 1);
-    };
-  }
-}
-
-function noop() {}
-
-var playStatuses = {
-  PLAYING: 'PLAYING',
-  STOPPED: 'STOPPED',
-  PAUSED: 'PAUSED'
-};
-
-var Sound = function (_React$Component) {
-  _inherits(Sound, _React$Component);
-
-  function Sound() {
-    _classCallCheck(this, Sound);
-
-    return _possibleConstructorReturn(this, (Sound.__proto__ || Object.getPrototypeOf(Sound)).apply(this, arguments));
-  }
-
-  _createClass(Sound, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      this.createSound(function (sound) {
-        return _this2.updateSound(sound);
-      });
-    }
-  }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      this.removeSound();
-    }
-  }, {
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate(prevProps) {
-      var _this3 = this;
-
-      if (this.props.url !== prevProps.url) {
-        this.createSound(function (sound) {
-          return _this3.updateSound(sound, prevProps);
-        });
-      } else {
-        this.updateSound(this.sound);
-      }
-    }
-  }, {
-    key: 'updateSound',
-    value: function updateSound(sound) {
-      var prevProps = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-      if (!sound) {
-        return;
-      }
-
-      if (this.props.playStatus === playStatuses.PLAYING) {
-        if (sound.playState === 0) {
-          sound.play();
-        }
-
-        if (sound.paused) {
-          sound.resume();
-        }
-      } else if (this.props.playStatus === playStatuses.STOPPED) {
-        if (sound.playState !== 0) {
-          sound.stop();
-        }
-      } else {
-        // this.props.playStatus === playStatuses.PAUSED
-        if (!sound.paused) {
-          sound.pause();
-        }
-      }
-
-      if (this.props.playFromPosition != null) {
-        if (this.props.playFromPosition !== prevProps.playFromPosition) {
-          sound.setPosition(this.props.playFromPosition);
-        }
-      }
-
-      if (this.props.position != null) {
-        if (sound.position !== this.props.position && Math.round(sound.position) !== Math.round(this.props.position)) {
-
-          sound.setPosition(this.props.position);
-        }
-      }
-
-      if (this.props.volume !== prevProps.volume) {
-        sound.setVolume(this.props.volume);
-      }
-
-      if (this.props.playbackRate !== prevProps.playbackRate) {
-        sound.setPlaybackRate(this.props.playbackRate);
-      }
-    }
-  }, {
-    key: 'createSound',
-    value: function createSound(callback) {
-      var _this4 = this;
-
-      this.removeSound();
-
-      var instance = this;
-
-      if (!this.props.url) {
-        return;
-      }
-
-      this.stopCreatingSound = _createSound({
-        url: this.props.url,
-        autoLoad: this.props.autoLoad,
-        volume: this.props.volume,
-        position: this.props.playFromPosition || this.props.position || 0,
-        playbackRate: this.props.playbackRate,
-        whileloading: function whileloading() {
-          instance.props.onLoading(this);
-        },
-        whileplaying: function whileplaying() {
-          instance.props.onPlaying(this);
-        },
-        onerror: function onerror(errorCode, description) {
-          instance.props.onError(errorCode, description, this);
-        },
-        onload: function onload() {
-          instance.props.onLoad(this);
-        },
-        onpause: function onpause() {
-          instance.props.onPause(this);
-        },
-        onresume: function onresume() {
-          instance.props.onResume(this);
-        },
-        onstop: function onstop() {
-          instance.props.onStop(this);
-        },
-        onfinish: function onfinish() {
-          if (instance.props.loop && instance.props.playStatus === playStatuses.PLAYING) {
-            instance.sound.play();
-          } else {
-            instance.props.onFinishedPlaying();
-          }
-        },
-        onbufferchange: function onbufferchange() {
-          instance.props.onBufferChange(this.isBuffering);
-        }
-      }, function (sound) {
-        _this4.sound = sound;
-        callback(sound);
-      });
-    }
-  }, {
-    key: 'removeSound',
-    value: function removeSound() {
-      if (this.stopCreatingSound) {
-        this.stopCreatingSound();
-        delete this.stopCreatingSound;
-      }
-
-      if (this.sound) {
-        try {
-          this.sound.destruct();
-        } catch (e) {} // eslint-disable-line
-
-        delete this.sound;
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return null;
-    }
-  }]);
-
-  return Sound;
-}(_react2.default.Component);
-
-Sound.status = playStatuses;
-Sound.propTypes = {
-  url: _propTypes2.default.string.isRequired,
-  playStatus: _propTypes2.default.oneOf(Object.keys(playStatuses)).isRequired,
-  position: _propTypes2.default.number,
-  playFromPosition: _propTypes2.default.number,
-  volume: _propTypes2.default.number,
-  playbackRate: _propTypes2.default.number,
-  onError: _propTypes2.default.func,
-  onLoading: _propTypes2.default.func,
-  onLoad: _propTypes2.default.func,
-  onPlaying: _propTypes2.default.func,
-  onPause: _propTypes2.default.func,
-  onResume: _propTypes2.default.func,
-  onStop: _propTypes2.default.func,
-  onFinishedPlaying: _propTypes2.default.func,
-  onBufferChange: _propTypes2.default.func,
-  autoLoad: _propTypes2.default.bool,
-  loop: _propTypes2.default.bool
-};
-Sound.defaultProps = {
-  volume: 100,
-  playbackRate: 1,
-  onError: noop,
-  onLoading: noop,
-  onPlaying: noop,
-  onLoad: noop,
-  onPause: noop,
-  onResume: noop,
-  onStop: noop,
-  onFinishedPlaying: noop,
-  onBufferChange: noop,
-  autoLoad: false,
-  loop: false
-};
-exports.default = Sound;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 31 */
@@ -25790,7 +25810,7 @@ window.soundManager = soundManager;
 
 }(window));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)(module)))
 
 /***/ }),
 /* 36 */
@@ -28499,7 +28519,7 @@ window.SoundManager = SoundManager;
 window.soundManager = soundManager;
 }(window));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)(module)))
 
 /***/ }),
 /* 37 */
@@ -28518,7 +28538,77 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _color = __webpack_require__(38);
+var _reactSound = __webpack_require__(15);
+
+var _reactSound2 = _interopRequireDefault(_reactSound);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var tune = './sound/zorba.mp3';
+// import songs from '../../public/ambientSound'; //change to actual folder with mp3 file
+
+
+var Soundz = function (_React$Component) {
+  _inherits(Soundz, _React$Component);
+
+  function Soundz(props) {
+    _classCallCheck(this, Soundz);
+
+    return _possibleConstructorReturn(this, (Soundz.__proto__ || Object.getPrototypeOf(Soundz)).call(this, props));
+  }
+
+  _createClass(Soundz, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'p',
+          null,
+          'hi'
+        ),
+        _react2.default.createElement(_reactSound2.default, {
+          url: './sound/zorba.mp3',
+          playStatus: _reactSound2.default.status.PLAYING,
+          playFromPosition: 300 /* in milliseconds */,
+          onLoading: this.handleSongLoading,
+          onPlaying: this.handleSongPlaying,
+          onFinishedPlaying: this.handleSongFinishedPlaying
+        })
+      );
+    }
+  }]);
+
+  return Soundz;
+}(_react2.default.Component);
+
+exports.default = Soundz;
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _color = __webpack_require__(39);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28599,7 +28689,7 @@ setInterval(function () {
 exports.default = Circle;
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
