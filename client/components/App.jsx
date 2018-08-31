@@ -3,6 +3,21 @@ import Sound from 'react-sound';
 
 import Circle from './Circle'
 
+class MyComponentWithSound extends React.Component {
+  render() {
+    return <Sound
+    //{...props}
+      url="../../public/sound/zorba.mp3"
+      playStatus={Sound.status.PLAYING}
+      loop={true}
+      //playFromPosition={0 /* in milliseconds */}
+      //onLoading={this.handleSongLoading}
+      //onPlaying={this.handleSongPlaying}
+      //onFinishedPlaying={this.handleSongFinishedPlaying}
+    />; 
+  }
+}
+
 class App extends React.Component {
 
   constructor (props) {
