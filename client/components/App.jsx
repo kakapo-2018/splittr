@@ -20,11 +20,11 @@ class App extends React.Component {
 
     // this.handleClick = this.handleClick.bind(this, props.circle)
     this.handleTimer = this.handleTimer.bind(this)
+    this.deleteId = this.deleteId.bind(this)
     // this.createCells = this.createCells.bind(this)
   }
 
   handleTimer() {
-    console.log("Hnadling timer!")
     setInterval(() => {
       timer();
       {this.createCells()}
@@ -35,8 +35,9 @@ class App extends React.Component {
   
   }
 
+ 
+
   createCells() {
-    console.log("create cell!!")
     let endIndex = this.state.circles.length -1
     let endId = this.state.circles[endIndex].id +1
     // let arr = this.state.circles 
@@ -52,16 +53,26 @@ class App extends React.Component {
     // let test= arr.push({newCircle})
   console.log("State: ",this.state)
     let otherArr = [...this.state.circles, newCircle]
-    console.log("test: " + otherArr.length)
+    // console.log("test: " + otherArr.length)
     // this.setState(this.state.circles.push(newCircle))
     this.setState({circles: otherArr})
   }
 
+  deleteId(event) {
+    let deletingId = event.target.id
+
+
+    let please = this.state.circles.filter(circle => {
+      return circle.id != deletingId
+    })
+    this.setState({circles: please})
+    
+  }
+  
   render(){
   const width = window.innerWidth
   const height = window.innerHeight
 
-  console.log(this.state.circles[0].cx)
     
   return (
 
@@ -74,7 +85,7 @@ class App extends React.Component {
 
     {
       this.state.circles.map((circle, i)=>{
-        return <circle key={'circle' + i} cx={circle.cx} cy={circle.cy} r={circle.r} fill={circle.color}/>
+        return <circle key={'circle' + i} id={circle.id} cx={circle.cx} cy={circle.cy} r={circle.r} fill={circle.color} onClick={this.deleteId.bind(this)} />
       })
 
     }

@@ -18318,6 +18318,7 @@ var App = function (_React$Component) {
 
     // this.handleClick = this.handleClick.bind(this, props.circle)
     _this.handleTimer = _this.handleTimer.bind(_this);
+    _this.deleteId = _this.deleteId.bind(_this);
     // this.createCells = this.createCells.bind(this)
     return _this;
   }
@@ -18327,7 +18328,6 @@ var App = function (_React$Component) {
     value: function handleTimer() {
       var _this2 = this;
 
-      console.log("Hnadling timer!");
       setInterval(function () {
         timer();
         {
@@ -18339,7 +18339,6 @@ var App = function (_React$Component) {
   }, {
     key: 'createCells',
     value: function createCells() {
-      console.log("create cell!!");
       var endIndex = this.state.circles.length - 1;
       var endId = this.state.circles[endIndex].id + 1;
       // let arr = this.state.circles 
@@ -18353,24 +18352,34 @@ var App = function (_React$Component) {
         // let test= arr.push({newCircle})
       };console.log("State: ", this.state);
       var otherArr = [].concat(_toConsumableArray(this.state.circles), [newCircle]);
-      console.log("test: " + otherArr.length);
+      // console.log("test: " + otherArr.length)
       // this.setState(this.state.circles.push(newCircle))
       this.setState({ circles: otherArr });
     }
   }, {
+    key: 'deleteId',
+    value: function deleteId(event) {
+      var deletingId = event.target.id;
+
+      var please = this.state.circles.filter(function (circle) {
+        return circle.id != deletingId;
+      });
+      this.setState({ circles: please });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       var width = window.innerWidth;
       var height = window.innerHeight;
-
-      console.log(this.state.circles[0].cx);
 
       return _react2.default.createElement(
         'svg',
         { width: width, height: height },
         _react2.default.createElement('circle', { cx: this.state.circles[0].cx, cy: this.state.circles[0].cy, r: this.state.circles[0].r, fill: this.state.circles[0].color }),
         this.state.circles.map(function (circle, i) {
-          return _react2.default.createElement('circle', { key: 'circle' + i, cx: circle.cx, cy: circle.cy, r: circle.r, fill: circle.color });
+          return _react2.default.createElement('circle', { key: 'circle' + i, id: circle.id, cx: circle.cx, cy: circle.cy, r: circle.r, fill: circle.color, onClick: _this3.deleteId.bind(_this3) });
         })
       );
     }
